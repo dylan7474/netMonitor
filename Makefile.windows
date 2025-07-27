@@ -1,0 +1,43 @@
+# Makefile for Windows (for cross-compiling from Linux using MinGW-w64)
+#
+# This Makefile is designed to build the SDL2 network monitor on a Linux host
+# for the Windows target.
+#
+# On Debian/Ubuntu, install the cross-compiler and libraries with:
+# sudo apt-get install mingw-w64
+# sudo apt-get install libsdl2-dev libsdl2-ttf-dev libsdl2-mixer-dev
+#
+# USAGE:
+# make -f Makefile.windows
+
+# --- Set the cross-compiler prefix ---
+CROSS_COMPILE_PREFIX = x86_64-w64-mingw32-
+
+CC = $(CROSS_COMPILE_PREFIX)gcc
+CFLAGS = -Wall -Wextra -std=c99 -O2 -I/usr/$(CROSS_COMPILE_PREFIX)/include/SDL2 -D_REENTRANT
+# Link against the necessary Windows, SDL, and networking libraries.
+# -mwindows flag creates a GUI application without a console window.
+# FIX: Added oleaut32 and rpcrt4 to resolve the remaining linker errors.
+LDFLAGS = -lmingw32 -lSDL2main -lSDL2 -lSDL2_ttf -lSDL2_mixer -lws2_32 -liphlpapi -lpthread -lsetupapi -lole32 -loleaut32 -limm32 -lversion -lwinmm -luuid -lrpcrt4 -lcfgmgr32 -mwindows -static -static-libgcc -static-libstdc++
+TARGET = network_monitor_sdl.exe
+
+# Source files
+SRCS = network_monitor_sdl.c
+
+# Use a different object file suffix to avoid conflicts with Linux builds
+OBJS = $(SRCS:.c=.win.o)
+
+.PHONY: all clean
+
+all: $(TARGET)
+
+$(TARGET): $(OBJS)
+	$(CC) -o $(TARGET) $(OBJS) $(LDFLAGS)
+
+%.win.o: %.c
+	$(CC) $(CFLAGS) -c $< -o $@
+
+# Use 'rm' for cleaning, as this Makefile is run on Linux
+clean:
+	rm -f $(OBJS) $(TARGET)
+
