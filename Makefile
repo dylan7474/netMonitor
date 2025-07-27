@@ -14,7 +14,7 @@ CFLAGS = -Wall -Wextra -std=c99 -O2 $(shell sdl2-config --cflags)
 LDFLAGS = $(shell sdl2-config --libs) -lSDL2_ttf -lSDL2_mixer -lpthread -lm
 TARGET = network_monitor_sdl
 
-SRCS = network_monitor_sdl.c
+SRCS = main.c
 OBJS = $(SRCS:.c=.o)
 
 .PHONY: all clean
