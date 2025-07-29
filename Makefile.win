@@ -19,7 +19,7 @@ CFLAGS = -Wall -Wextra -std=c99 -O2 -I/usr/$(CROSS_COMPILE_PREFIX)/include/SDL2 
 # -mwindows flag creates a GUI application without a console window.
 # FIX: Added oleaut32 and rpcrt4 to resolve the remaining linker errors.
 LDFLAGS = -lmingw32 -lSDL2main -lSDL2 -lSDL2_ttf -lSDL2_mixer -lws2_32 -liphlpapi -lpthread -lsetupapi -lole32 -loleaut32 -limm32 -lversion -lwinmm -luuid -lrpcrt4 -lcfgmgr32 -mwindows -static -static-libgcc -static-libstdc++
-TARGET = network_monitor_sdl.exe
+TARGET = netmonitor.exe
 
 # Source files
 SRCS = main.c

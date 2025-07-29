@@ -12,7 +12,7 @@ CC = gcc
 CFLAGS = -Wall -Wextra -std=c99 -O2 $(shell sdl2-config --cflags)
 # FIX: Added -lm to link the math library for the sin() function.
 LDFLAGS = $(shell sdl2-config --libs) -lSDL2_ttf -lSDL2_mixer -lpthread -lm
-TARGET = network_monitor_sdl
+TARGET = netmonitor
 
 SRCS = main.c
 OBJS = $(SRCS:.c=.o)
